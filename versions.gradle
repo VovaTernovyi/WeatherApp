@@ -1,0 +1,166 @@
+ext {
+    //region versions
+    //kotlin gradle
+    gradle_plugin_version = '3.6.3'
+    kotlin_version = '1.3.72'
+
+    //configs
+    compile_sdk_version = 29
+    min_sdk_version = 14
+    target_sdk_version = 29
+    build_tools_version = '29.0.3'
+    test_instrumentation_runner = 'androidx.test.runner.AndroidJUnitRunner'
+    version_code = 1
+    version_major = 0
+    version_minor = 0
+    version_patch = 0
+    version_build = 1
+
+    //koin versions
+    koin_version = "2.1.4"
+
+    //lifecycle versions
+    lifecycle_version = '2.2.0'
+
+    //web api versions
+    retrofit_version = '2.7.2'
+    okhttp3_logging_interceptor_version = '4.4.0'
+
+    //facebook stetho
+    stetho_version = '1.5.0'
+
+    //ui versions
+    glide_version = '4.11.0'
+    constraint_version = '1.1.3'
+    material_design_version = '1.1.0'
+    support_library_version = '28.0.0'
+
+    //room
+    room_version = '2.2.5'
+
+    //tests versions
+    test_version = '4.12'
+    test_ext_junit = '1.1.1'
+    test_espresso = '3.2.0'
+
+    //other versions
+    app_compat_version = '1.1.0'
+    core_ktx_version = '1.2.0'
+    coroutines_version = '1.3.5'
+    rx_java_version = '3.0.0'
+    //endregion
+
+    //region dependency name
+    //material design
+    material_design = "com.google.android.material:material:$material_design_version"
+    constraint_layout = "androidx.constraintlayout:constraintlayout:$constraint_version"
+    support_library = "com.android.support:support-v4:$support_library_version"
+
+    //coroutines
+    coroutines_android = "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version"
+    coroutines_core = "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version"
+
+    //RxJava
+    rx_java = "io.reactivex.rxjava3:rxjava:$rx_java_version"
+
+    //web api (retrofit + Gson + okhttp3)
+    retrofit = "com.squareup.retrofit2:retrofit:$retrofit_version"
+    gson = "com.squareup.retrofit2:converter-gson:$retrofit_version"
+    logging_http = "com.squareup.okhttp3:logging-interceptor:$okhttp3_logging_interceptor_version"
+
+    //interceptors
+    stetho = "com.facebook.stetho:stetho:$stetho_version"
+    stetho_okhttp = "com.facebook.stetho:stetho-okhttp3:$stetho_version"
+
+    //arch components
+    viewmodel = "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
+    viewmodel_state = "androidx.lifecycle:lifecycle-viewmodel-savedstate:$lifecycle_version"
+    livedata = "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version"
+    lifecycle_ext = "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
+    lifecycle_compiler = "androidx.lifecycle:lifecycle-compiler:$lifecycle_version"
+    binding_compiler = "androidx.databinding:databinding-compiler:$gradle_plugin_version"
+
+    //koin
+    koin_core = "org.koin:koin-core:$koin_version"
+    koin_android = "org.koin:koin-android:$koin_version"
+    koin_view_models = "org.koin:koin-android-viewmodel:$koin_version"
+
+    //room
+    room = "androidx.room:room-runtime:$room_version"
+    room_compiler = "androidx.room:room-compiler:$room_version"
+    room_ktx = "androidx.room:room-ktx:$room_version"
+    room_test = "androidx.room:room-testing:$room_version"
+
+    //glide
+    glide = "com.github.bumptech.glide:glide:$glide_version"
+    glide_compiler = "com.github.bumptech.glide:compiler:$glide_version"
+
+    //tests
+    testImpl = "junit:junit:$test_version"
+    androidTestJunitImpl = "androidx.test.ext:junit:$test_ext_junit"
+    androidTestEspressoImpl = "androidx.test.espresso:espresso-core:$test_espresso"
+
+    //default
+    ktl_stdlib = "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    appcompat = "androidx.appcompat:appcompat:$app_compat_version"
+    core_ktx = "androidx.core:core-ktx:$core_ktx_version"
+    //endregion
+
+    //region dependency collections
+    test_dependencies = [
+            [configuration: 'testImplementation', dependency: testImpl],
+            [configuration: 'androidTestImplementation', dependency: androidTestJunitImpl],
+            [configuration: 'androidTestImplementation', dependency: androidTestEspressoImpl]
+    ]
+
+    default_dependencies = [
+            [configuration: 'implementation', dependency: ktl_stdlib],
+            [configuration: 'implementation', dependency: appcompat],
+            [configuration: 'implementation', dependency: core_ktx]
+    ]
+
+    other_dependencies = [
+            [configuration: 'implementation', dependency: koin_core],
+            [configuration: 'implementation', dependency: koin_android],
+            [configuration: 'implementation', dependency: koin_view_models],
+            [configuration: 'implementation', dependency: rx_java]
+    ]
+
+    ui_dependencies = [
+            [configuration: 'implementation', dependency: glide],
+            [configuration: 'kapt', dependency: glide_compiler],
+            [configuration: 'implementation', dependency: material_design],
+            [configuration: 'implementation', dependency: constraint_layout],
+            [configuration: 'implementation', dependency: support_library]
+    ]
+
+    arch_components_dependencies = [
+            [configuration: 'kapt', dependency: binding_compiler],
+            [configuration: 'kapt', dependency: lifecycle_compiler],
+            [configuration: 'implementation', dependency: lifecycle_ext],
+            [configuration: 'implementation', dependency: livedata],
+            [configuration: 'implementation', dependency: viewmodel],
+            [configuration: 'implementation', dependency: viewmodel_state],
+            [configuration: 'implementation', dependency: coroutines_core],
+            [configuration: 'implementation', dependency: coroutines_android]
+    ]
+
+    db_dependencies = [
+            [configuration: 'implementation', dependency: room],
+            [configuration: 'kapt', dependency: room_compiler],
+            [configuration: 'implementation', dependency: room_ktx],
+            [configuration: 'androidTestImplementation', dependency: room_test]
+    ]
+
+    web_api_dependencies = [
+            [configuration: 'implementation', dependency: retrofit],
+            [configuration: 'implementation', dependency: gson],
+            [configuration: 'implementation', dependency: logging_http]
+    ]
+
+    interceptor_dependencies = [
+            [configuration: 'implementation', dependency: stetho],
+            [configuration: 'implementation', dependency: stetho_okhttp]
+    ]
+    //endregion
+}

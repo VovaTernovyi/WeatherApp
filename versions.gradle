@@ -19,6 +19,9 @@ ext {
     //koin versions
     koin_version = "2.1.4"
 
+    //play services
+    play_services_version = "17.0.0"
+
     //lifecycle versions
     lifecycle_version = '2.2.0'
 
@@ -48,6 +51,7 @@ ext {
     core_ktx_version = '1.2.0'
     coroutines_version = '1.3.5'
     rx_java_version = '3.0.0'
+    rx_java_retrofit_adapter_version = '2.9.0'
     //endregion
 
     //region dependency name
@@ -62,6 +66,8 @@ ext {
 
     //RxJava
     rx_java = "io.reactivex.rxjava3:rxjava:$rx_java_version"
+    rx_android = "io.reactivex.rxjava3:rxandroid:$rx_java_version"
+    rx_java_retrofit_adapter = "com.squareup.retrofit2:adapter-rxjava3:$rx_java_retrofit_adapter_version"
 
     //web api (retrofit + Gson + okhttp3)
     retrofit = "com.squareup.retrofit2:retrofit:$retrofit_version"
@@ -84,6 +90,9 @@ ext {
     koin_core = "org.koin:koin-core:$koin_version"
     koin_android = "org.koin:koin-android:$koin_version"
     koin_view_models = "org.koin:koin-android-viewmodel:$koin_version"
+
+    //play services
+    play_services_location = "com.google.android.gms:play-services-location:$play_services_version"
 
     //room
     room = "androidx.room:room-runtime:$room_version"
@@ -123,7 +132,10 @@ ext {
             [configuration: 'implementation', dependency: koin_core],
             [configuration: 'implementation', dependency: koin_android],
             [configuration: 'implementation', dependency: koin_view_models],
-            [configuration: 'implementation', dependency: rx_java]
+            [configuration: 'implementation', dependency: rx_java],
+            [configuration: 'implementation', dependency: rx_android],
+            [configuration: 'implementation', dependency: rx_java_retrofit_adapter],
+            [configuration: 'implementation', dependency: play_services_location]
     ]
 
     ui_dependencies = [

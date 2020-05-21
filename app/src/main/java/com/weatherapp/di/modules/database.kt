@@ -13,4 +13,6 @@ val KoinDatabaseModule = module {
             WeatherDatabase.DATABASE_NAME
         ).fallbackToDestructiveMigration().build()
     }
+
+    factory { get<WeatherDatabase>().weatherDao() }
 }

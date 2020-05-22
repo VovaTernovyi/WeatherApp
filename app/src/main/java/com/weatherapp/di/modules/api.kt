@@ -2,8 +2,6 @@ package com.weatherapp.di.modules
 
 import com.facebook.stetho.okhttp3.StethoInterceptor
 import com.google.gson.GsonBuilder
-import com.weatherapp.R
-import com.weatherapp.WeatherApplication
 import com.weatherapp.extension.onNotReleaseBuild
 import com.weatherapp.model.network.ApiRest
 import com.weatherapp.model.network.contract.WeatherContract
@@ -42,7 +40,6 @@ fun getOkHttpClient(): OkHttpClient =
                     .addQueryParameter(
                         "appid",
                         "5326d7968ac4402faa81121f2e6aaceb"
-//                        WeatherApplication.instance.getString(R.string.app_id)
                     )
                     .build()
 

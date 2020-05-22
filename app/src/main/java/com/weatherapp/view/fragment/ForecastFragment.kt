@@ -52,8 +52,8 @@ class ForecastFragment : Fragment() {
         getLastLocation()
         viewModel.weatherLiveData.observe(viewLifecycleOwner, Observer {
             it?.let {
-                it.daily?.let {
-                    weatherForecastAdapter.clearAndAddWeatherForecast(it)
+                it.daily?.let { daily ->
+                    weatherForecastAdapter.clearAndAddWeatherForecast(daily)
                 }
                 showCurrentWeather(it.current)
             }
@@ -146,11 +146,11 @@ class ForecastFragment : Fragment() {
         mLocationRequest.numUpdates = 1
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
         fusedLocationClient.apply {
-            requestLocationUpdates(mLocationRequest, mLocationCallback, Looper.myLooper())
+            requestLocationUpdates(mLocationRequest, locationCallback, Looper.myLooper())
         }
     }
 
-    private val mLocationCallback: LocationCallback = object : LocationCallback() {
+    private val locationCallback: LocationCallback = object : LocationCallback() {
         override fun onLocationResult(locationResult: LocationResult) {
             val lastLocation: Location = locationResult.lastLocation
             viewModel.latitude.value = lastLocation.latitude

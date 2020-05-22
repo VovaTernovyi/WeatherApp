@@ -14,7 +14,10 @@ class WeatherViewModel(private val repository: WeatherRepository) : ViewModel(),
     private val refreshWeatherLiveData = SingleLiveEvent<Unit>()
 
     val downloadAndSaveWeatherLiveData = Transformations.switchMap(refreshWeatherLiveData) {
-        repository.downloadAndSaveWeatherForecastForLocation(latitude.value!!, longitude.value!!)
+        repository.downloadAndSaveWeatherForecastForLocation(
+            latitude.value ?: 0.0,
+            longitude.value ?: 0.0
+        )
     }
 
     val weatherLiveData = Transformations.switchMap(refreshWeatherLiveData) {

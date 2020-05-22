@@ -2,10 +2,7 @@ package com.weatherapp
 
 import android.app.Application
 import com.facebook.stetho.Stetho
-import com.weatherapp.di.modules.KoinApiModule
-import com.weatherapp.di.modules.KoinArchitectureComponentViewModels
-import com.weatherapp.di.modules.KoinDatabaseModule
-import com.weatherapp.di.modules.KoinRepositoriesModule
+import com.weatherapp.di.modules.*
 import com.weatherapp.extension.onNotReleaseBuild
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
@@ -25,7 +22,8 @@ class WeatherApplication : Application() {
                 KoinApiModule,
                 KoinDatabaseModule,
                 KoinRepositoriesModule,
-                KoinArchitectureComponentViewModels
+                KoinArchitectureComponentViewModels,
+                KoinOtherModule
             )
         }
     }

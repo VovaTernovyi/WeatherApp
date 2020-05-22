@@ -1,6 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
 
+    <data>
+
+        <variable
+            name="imageUrl"
+            type="String" />
+
+        <variable
+            name="temperature"
+            type="String" />
+
+        <variable
+            name="feelsLike"
+            type="String" />
+
+        <variable
+            name="sunrise"
+            type="Long" />
+
+        <variable
+            name="sunset"
+            type="Long" />
+
+        <variable
+            name="pressure"
+            type="String" />
+
+        <variable
+            name="humidity"
+            type="String" />
+
+        <variable
+            name="wind"
+            type="String" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
@@ -8,25 +43,168 @@
         android:layout_height="match_parent"
         tools:context=".view.fragment.ForecastFragment">
 
-        <TextView
-            android:id="@+id/latTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Latitude: "
-            app:layout_constraintBottom_toBottomOf="parent"
+        <ImageView
+            android:id="@+id/forecast_image"
+            loadImage="@{imageUrl}"
+            android:layout_width="96dp"
+            android:layout_height="96dp"
+            android:layout_marginStart="@dimen/base_margin_16dp"
+            android:layout_marginTop="@dimen/base_margin_48dp"
+            android:layout_marginEnd="@dimen/base_margin_16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/lonTextView"
+            android:id="@+id/forecast_temperature"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="Longitude: "
+            android:layout_marginTop="@dimen/base_margin_16dp"
+            android:text="@{String.format(@string/celsius_format, temperature)}"
+            android:textSize="@dimen/text_size_24sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/latTextView" />
+            app:layout_constraintTop_toBottomOf="@id/forecast_image" />
+
+        <TextView
+            android:id="@+id/forecast_feels_like"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/base_margin_16dp"
+            android:text="@{String.format(@string/feels_like, feelsLike)}"
+            android:textSize="@dimen/text_size_16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/forecast_temperature" />
+
+        <TextView
+            android:id="@+id/forecast_sunrise_label"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/base_margin_16dp"
+            android:layout_marginLeft="@dimen/base_margin_16dp"
+            android:layout_marginTop="@dimen/base_margin_16dp"
+            android:layout_marginEnd="@dimen/base_margin_16dp"
+            android:layout_marginRight="@dimen/base_margin_16dp"
+            android:gravity="end"
+            android:text="@string/sunrise"
+            android:textAlignment="textEnd"
+            app:layout_constraintEnd_toStartOf="@id/forecast_sunset_label"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/forecast_feels_like" />
+
+        <TextView
+            android:id="@+id/forecast_sunrise"
+            time="@{sunrise}"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/base_margin_16dp"
+            android:layout_marginLeft="@dimen/base_margin_16dp"
+            android:layout_marginTop="@dimen/base_margin_8dp"
+            android:layout_marginEnd="@dimen/base_margin_16dp"
+            android:layout_marginRight="@dimen/base_margin_16dp"
+            android:gravity="end"
+            android:textAlignment="viewEnd"
+            android:textSize="@dimen/text_size_16sp"
+            app:layout_constraintEnd_toStartOf="@id/forecast_sunset"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/forecast_sunrise_label" />
+
+        <TextView
+            android:id="@+id/forecast_sunset_label"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/base_margin_16dp"
+            android:layout_marginLeft="@dimen/base_margin_16dp"
+            android:layout_marginTop="@dimen/base_margin_16dp"
+            android:layout_marginEnd="@dimen/base_margin_16dp"
+            android:layout_marginRight="@dimen/base_margin_16dp"
+            android:gravity="start"
+            android:text="@string/sunset"
+            android:textAlignment="viewStart"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/forecast_sunrise_label"
+            app:layout_constraintTop_toBottomOf="@id/forecast_feels_like" />
+
+        <TextView
+            android:id="@+id/forecast_sunset"
+            time="@{sunset}"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/base_margin_16dp"
+            android:layout_marginLeft="@dimen/base_margin_16dp"
+            android:layout_marginTop="@dimen/base_margin_8dp"
+            android:layout_marginEnd="@dimen/base_margin_16dp"
+            android:layout_marginRight="@dimen/base_margin_16dp"
+            android:gravity="start"
+            android:textAlignment="viewStart"
+            android:textSize="@dimen/text_size_16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/forecast_sunrise"
+            app:layout_constraintTop_toBottomOf="@id/forecast_sunset_label" />
+
+        <TextView
+            android:id="@+id/forecast_pressure"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/base_margin_16dp"
+            android:layout_marginLeft="@dimen/base_margin_16dp"
+            android:layout_marginTop="@dimen/base_margin_16dp"
+            android:layout_marginEnd="@dimen/base_margin_8dp"
+            android:layout_marginRight="@dimen/base_margin_8dp"
+            android:gravity="center"
+            android:text="@{String.format(@string/pressure, pressure)}"
+            android:textAlignment="center"
+            android:textSize="@dimen/text_size_16sp"
+            app:layout_constraintEnd_toStartOf="@id/forecast_humidity"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/forecast_sunrise" />
+
+        <TextView
+            android:id="@+id/forecast_humidity"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/base_margin_8dp"
+            android:layout_marginLeft="@dimen/base_margin_8dp"
+            android:layout_marginTop="@dimen/base_margin_16dp"
+            android:layout_marginEnd="@dimen/base_margin_8dp"
+            android:layout_marginRight="@dimen/base_margin_8dp"
+            android:gravity="center"
+            android:text="@{String.format(@string/humidity, humidity)}"
+            android:textAlignment="center"
+            android:textSize="@dimen/text_size_16sp"
+            app:layout_constraintEnd_toStartOf="@id/forecast_wind"
+            app:layout_constraintStart_toEndOf="@id/forecast_pressure"
+            app:layout_constraintTop_toBottomOf="@id/forecast_sunrise" />
+
+        <TextView
+            android:id="@+id/forecast_wind"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/base_margin_8dp"
+            android:layout_marginLeft="@dimen/base_margin_8dp"
+            android:layout_marginTop="@dimen/base_margin_16dp"
+            android:layout_marginEnd="@dimen/base_margin_16dp"
+            android:layout_marginRight="@dimen/base_margin_16dp"
+            android:gravity="center"
+            android:text="@{String.format(@string/wind, wind)}"
+            android:textAlignment="center"
+            android:textSize="@dimen/text_size_16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/forecast_humidity"
+            app:layout_constraintTop_toBottomOf="@id/forecast_sunrise" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/fragment_forecast_recycler_view"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:itemCount="10"
+            tools:listitem="@layout/item_weather_forecast" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

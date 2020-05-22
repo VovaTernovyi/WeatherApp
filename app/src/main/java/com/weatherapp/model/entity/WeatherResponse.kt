@@ -22,8 +22,8 @@ data class WeatherResponse(
     val current: Current,
     @SerializedName("hourly")
     @TypeConverters(HourlyListConverter::class)
-    val hourly: List<Hourly>,
+    val hourly: List<Hourly>? = null,
     @SerializedName("daily")
     @TypeConverters(DailyListConverter::class)
-    val daily: List<Daily>
+    val daily: List<Daily>? = null
 )

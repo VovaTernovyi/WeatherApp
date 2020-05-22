@@ -1,7 +1,6 @@
 package com.weatherapp.view.fragment
 
 import android.Manifest
-import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -20,34 +19,46 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.google.android.gms.location.*
 import com.weatherapp.R
+import com.weatherapp.databinding.FragmentForecastBinding
 import com.weatherapp.extension.onError
+import com.weatherapp.model.entity.Current
+import com.weatherapp.model.network.ApiRest
+import com.weatherapp.view.adapter.WeatherForecastAdapter
 import com.weatherapp.viewModel.WeatherViewModel
 import kotlinx.android.synthetic.main.fragment_forecast.*
+import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class ForecastFragment : Fragment() {
 
     private val permissionId = 44
 
-    lateinit var fusedLocationClient: FusedLocationProviderClient
-
+    private lateinit var binding: FragmentForecastBinding
     val viewModel: WeatherViewModel by viewModel()
+
+    lateinit var fusedLocationClient: FusedLocationProviderClient
+    private val weatherForecastAdapter: WeatherForecastAdapter by inject()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_forecast, container, false)
-    }
+    ) = FragmentForecastBinding.inflate(inflater, container, false).also {
+        binding = it
+    }.root
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
         getLastLocation()
         viewModel.weatherLiveData.observe(viewLifecycleOwner, Observer {
-            it?.let { latTextView.text = it.timezone }//Show this data on the UI.
+            it?.let {
+                it.daily?.let {
+                    weatherForecastAdapter.clearAndAddWeatherForecast(it)
+                }
+                showCurrentWeather(it.current)
+            }
         })
+        setupView()
     }
 
     override fun onResume() {
@@ -57,6 +68,7 @@ class ForecastFragment : Fragment() {
         }
         viewModel.refreshWeatherForecast()
     }
+
 
     override fun onRequestPermissionsResult(
         requestCode: Int,
@@ -71,6 +83,30 @@ class ForecastFragment : Fragment() {
         }
     }
 
+    private fun showCurrentWeather(current: Current) {
+        binding.apply {
+            imageUrl =
+                ApiRest.IMAGE_BASE_URL + getString(R.string.image_format, current.weather[0].icon)
+            temperature = current.temperature.toString()
+            feelsLike = current.feelsLike.toString()
+            sunrise = current.sunrise.toLong()
+            sunset = current.sunset.toLong()
+            pressure = current.pressure.toString()
+            humidity = current.humidity.toString()
+            wind = current.windSpeed.toString()
+        }
+    }
+
+    private fun setupView() = binding.apply {
+        fragment_forecast_recycler_view.apply {
+            adapter = weatherForecastAdapter
+        }
+        setHasOptionsMenu(true)
+        weatherForecastAdapter.onWeatherForecastClickListener = { _ ->
+
+        }
+    }
+
     private fun initDownloadObserver() {
         viewModel.downloadAndSaveWeatherLiveData.observe(viewLifecycleOwner, Observer {
             it.onError { _, _ ->
@@ -79,7 +115,6 @@ class ForecastFragment : Fragment() {
         })
     }
 
-    @SuppressLint("MissingPermission")
     private fun getLastLocation() {
         if (checkPermissions()) {
             if (isLocationEnabled()) {
@@ -91,9 +126,6 @@ class ForecastFragment : Fragment() {
                         viewModel.latitude.value = location.latitude
                         viewModel.longitude.value = location.longitude
                         initDownloadObserver()
-                        //TODO: remove!!!
-                        latTextView.text = location.latitude.toString()
-                        lonTextView.text = location.longitude.toString()
                     }
                 }
             } else {
@@ -106,8 +138,6 @@ class ForecastFragment : Fragment() {
         }
     }
 
-
-    @SuppressLint("MissingPermission")
     private fun requestNewLocationData() {
         val mLocationRequest = LocationRequest()
         mLocationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
@@ -126,9 +156,6 @@ class ForecastFragment : Fragment() {
             viewModel.latitude.value = lastLocation.latitude
             viewModel.longitude.value = lastLocation.longitude
             initDownloadObserver()
-            //TODO: remove!!!
-            latTextView.text = lastLocation.latitude.toString()
-            lonTextView.text = lastLocation.longitude.toString()
         }
     }
 

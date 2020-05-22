@@ -2,6 +2,15 @@
     <string name="app_name">WeatherApp</string>
     <string name="app_id">5326d7968ac4402faa81121f2e6aaceb</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="image_format">%1$s@2x.png</string>
+    <string name="celsius_format">%1$s \u2103</string>
+    <string name="feels_like">Feels like: %1$s \u2103</string>
+    <string name="temperature_min_max">%1$s \u2103 | %2$s \u2103</string>
+
+    <string name="sunrise">Sunrise</string>
+    <string name="sunset">Sunset</string>
+    <string name="humidity">Humidity:\n %1$s</string>
+    <string name="pressure">Pressure:\n %1$s</string>
+    <string name="wind">Wind:\n %1$s</string>
+
 </resources>

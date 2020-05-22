@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="imageUrl"
+            type="String" />
+
+        <variable
+            name="time"
+            type="Long" />
+
+        <variable
+            name="temperatureMin"
+            type="String" />
+
+        <variable
+            name="temperatureMax"
+            type="String" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/base_margin_8dp"
+        android:layout_marginLeft="@dimen/base_margin_8dp"
+        android:layout_marginTop="@dimen/base_margin_16dp"
+        android:layout_marginEnd="@dimen/base_margin_8dp"
+        android:layout_marginRight="@dimen/base_margin_8dp"
+        android:layout_marginBottom="@dimen/base_margin_16dp"
+        android:background="@color/colorGreyBackground">
+
+        <ImageView
+            android:id="@+id/item_forecast_image"
+            loadImage="@{imageUrl}"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:layout_marginStart="@dimen/base_margin_16dp"
+            android:layout_marginTop="@dimen/base_margin_16dp"
+            android:layout_marginEnd="@dimen/base_margin_16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/item_forecast_time"
+            date="@{time}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="@dimen/base_margin_8dp"
+            android:textAlignment="center"
+            android:textSize="@dimen/text_size_16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/item_forecast_image"
+            tools:text="Lviv" />
+
+        <TextView
+            android:id="@+id/item_forecast_min_max_temperature"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginBottom="@dimen/base_margin_16dp"
+            android:gravity="center"
+            android:padding="@dimen/base_margin_8dp"
+            android:text="@{String.format(@string/temperature_min_max, temperatureMin, temperatureMax)}"
+            android:textAlignment="center"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/item_forecast_time"
+            tools:text="-1/5" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
